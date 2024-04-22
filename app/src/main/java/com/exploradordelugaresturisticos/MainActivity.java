@@ -12,6 +12,7 @@ import android.view.Menu;
 import androidx.appcompat.widget.Toolbar;
 
 
+import com.example.exploradordelugaresturisticos.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -34,29 +35,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        solicitarPermiso();
 
-        setSupportActionBar(binding.appBarMain.toolbar); // Asegúrate de tener esto si usas una Toolbar
-
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, binding.appBarMain.toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
-        drawer.addDrawerListener(toggle);
-        toggle.syncState(); // Sincroniza el estado del icono con el DrawerLayout
-
+        // Configura el NavigationController y AppBarConfiguration
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_LugaresTuristico, R.id.nav_mapa, R.id.nav_configuracion, R.id.nav_salir)
-                .setOpenableLayout(drawer)
+                R.id.nav_LugaresTuristico, R.id.nav_mapa, R.id.nav_configuracion,R.id.nav_salir)
+                .setOpenableLayout(binding.drawerLayout)
                 .build();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        // Establece el NavigationView con el NavController
+        NavigationUI.setupWithNavController(binding.navView, navController);
 
     }
 

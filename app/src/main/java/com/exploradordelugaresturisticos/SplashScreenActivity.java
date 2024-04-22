@@ -7,6 +7,7 @@ import android.widget.Button;
 
 
 
+
 public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
