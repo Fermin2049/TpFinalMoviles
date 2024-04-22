@@ -1,4 +1,4 @@
-package com.example.exploradordelugaresturisticos;
+package com.exploradordelugaresturisticos;
 
 import static android.Manifest.permission.ACCESS_BACKGROUND_LOCATION;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -7,24 +7,15 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
-import androidx.appcompat.widget.Toolbar;
-
-
-import com.example.exploradordelugaresturisticos.R;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.exploradordelugaresturisticos.databinding.ActivityMainBinding;
+import com.exploradordelugaresturisticos.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 

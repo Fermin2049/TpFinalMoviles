@@ -1,4 +1,4 @@
-package com.example.exploradordelugaresturisticos;
+package com.exploradordelugaresturisticos;
 
 import android.content.Intent;
 import android.os.Bundle;

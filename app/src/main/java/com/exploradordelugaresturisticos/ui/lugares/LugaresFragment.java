@@ -1,4 +1,4 @@
-package com.example.exploradordelugaresturisticos.ui.lugares;
+package com.exploradordelugaresturisticos.ui.lugares;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.exploradordelugaresturisticos.databinding.FragmentLugaresBinding;
+import com.exploradordelugaresturisticos.databinding.FragmentLugaresBinding;
 
 public class LugaresFragment extends Fragment {
 

@@ -1,10 +1,11 @@
-package com.example.exploradordelugaresturisticos.ui.lugares;
+package com.exploradordelugaresturisticos.ui.lugares;
 
 import android.Manifest;
 import android.app.Application;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -39,13 +40,8 @@ public class LugaresViewModel extends AndroidViewModel {
 
     public void ObtenetUltimaUbicacion() {
         if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            // Permiso no concedido: Log para depurar
+            Log.d("LugaresViewModel", "Permisos de ubicación no concedidos.");
             return;
         }
         Task<Location> task = fused.getLastLocation();
@@ -54,14 +50,19 @@ public class LugaresViewModel extends AndroidViewModel {
             task.addOnSuccessListener(getApplication().getMainExecutor(), new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
+                    // Log para mostrar la ubicación recuperada o si es null
+                    Log.d("LugaresViewModel", "Ubicación recuperada: " + location);
                     if (location != null) {
                         mLocation.postValue(location);
+                    } else {
+                        // Si la ubicación es null, también debes loguearlo
+                        Log.d("LugaresViewModel", "Ubicación recuperada es null");
                     }
                 }
             });
-
         }
     }
+
 
     public void lecturaPermanente() {
         LocationRequest request = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 5000).build();
@@ -73,6 +74,7 @@ public class LugaresViewModel extends AndroidViewModel {
                 }
                 Location location = locationResult.getLastLocation();
                 mLocation.postValue(location);
+                Log.d("LugaresViewModel", "Iniciando lectura permanente de ubicación...");
             }
         };
         if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -93,6 +95,7 @@ public class LugaresViewModel extends AndroidViewModel {
             fused.removeLocationUpdates(callback);
             callback = null;  // Setear a null después de remover para evitar usos futuros
         }
+
     }
 
 

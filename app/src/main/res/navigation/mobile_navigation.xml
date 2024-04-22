@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/nav_LugaresTuristico"
-        android:name="com.example.exploradordelugaresturisticos.ui.lugares.LugaresFragment"
+        android:name="com.exploradordelugaresturisticos.ui.lugares.LugaresFragment"
         android:label="@string/menu_lugares"
         tools:layout="@layout/fragment_lugares" />
 
     <fragment
         android:id="@+id/nav_mapa"
-        android:name="com.example.exploradordelugaresturisticos.ui.mapa.MapaFragment"
+        android:name="com.exploradordelugaresturisticos.ui.vistaMapa.vistaMapaFragment"
         android:label="@string/menu_mapas"
-        tools:layout="@layout/fragment_mapa" />
+        tools:layout="@layout/fragment_vista_mapa" />
 
     <fragment
         android:id="@+id/nav_configuracion"
-        android:name="com.example.exploradordelugaresturisticos.ui.configuracion.ConfiguracionFragment"
+        android:name="com.exploradordelugaresturisticos.ui.configuracion.ConfiguracionFragment"
         android:label="@string/menu_configuracion"
         tools:layout="@layout/fragment_configuracion" />
 
     <fragment
         android:id="@+id/nav_salir"
-        android:name="com.example.exploradordelugaresturisticos.ui.salir.SalirFragment"
+        android:name="com.exploradordelugaresturisticos.ui.salir.SalirFragment"
         android:label="@string/menu_Salir"
         tools:layout="@layout/fragment_salir" />
 </navigation>

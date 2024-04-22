@@ -1,4 +1,4 @@
-package com.example.exploradordelugaresturisticos.ui.mapa;
+package com.exploradordelugaresturisticos.ui.mapa;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.exploradordelugaresturisticos.databinding.FragmentMapaBinding;
+import com.exploradordelugaresturisticos.databinding.FragmentMapaBinding;
 
 public class MapaFragment extends Fragment {
 

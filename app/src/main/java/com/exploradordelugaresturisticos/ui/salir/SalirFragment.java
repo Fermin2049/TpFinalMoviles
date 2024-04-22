@@ -1,22 +1,15 @@
-package com.example.exploradordelugaresturisticos.ui.salir;
+package com.exploradordelugaresturisticos.ui.salir;
 
 import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.example.exploradordelugaresturisticos.R;
-import com.example.exploradordelugaresturisticos.databinding.FragmentMapaBinding;
-import com.example.exploradordelugaresturisticos.databinding.FragmentSalirBinding;
-import com.example.exploradordelugaresturisticos.ui.mapa.MapaViewModel;
+import com.exploradordelugaresturisticos.databinding.FragmentSalirBinding;
+import com.exploradordelugaresturisticos.ui.mapa.MapaViewModel;
 
 public class SalirFragment extends Fragment {
 

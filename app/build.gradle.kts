@@ -1,13 +1,14 @@
 plugins {
     alias(libs.plugins.androidApplication)
+    alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
 }
 
 android {
-    namespace = "com.example.exploradordelugaresturisticos"
+    namespace = "com.exploradordelugaresturisticos"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.exploradordelugaresturisticos"
+        applicationId = "com.exploradordelugaresturisticos"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

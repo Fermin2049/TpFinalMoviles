@@ -3,12 +3,18 @@ package com.exploradordelugaresturisticos.ui.vistaMapa;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.exploradordelugaresturisticos.R;
+import com.exploradordelugaresturisticos.ui.lugares.LugaresViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -16,24 +22,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+
 public class vistaMapaFragment extends Fragment {
+    private LugaresViewModel lugaresViewModel;
+    private GoogleMap googleMap;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
         @Override
-        public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        public void onMapReady(GoogleMap gMap) {
+            Log.d("vistaMapaFragment", "Mapa listo.");
+            googleMap = gMap; // Inicializa la variable de clase.
+            // No coloques marcadores aquí a menos que sean fijos.
+            // La ubicación actual se manejará en actualizarUbicacionEnMapa().
         }
     };
 
@@ -53,5 +53,33 @@ public class vistaMapaFragment extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+
+        // Asegúrate de que LugaresViewModel ya esté inicializado aquí
+        lugaresViewModel = new ViewModelProvider(this).get(LugaresViewModel.class);
+
+        // Observa los cambios en la ubicación desde LugaresViewModel
+        lugaresViewModel.getMLocation().observe(getViewLifecycleOwner(), new Observer<Location>() {
+            @Override
+            public void onChanged(Location location) {
+                // Este log ayudará a saber cuándo se recibe la ubicación
+                Log.d("vistaMapaFragment", "Ubicación actualizada: " + location);
+                actualizarUbicacionEnMapa(location);
+            }
+        });
     }
+
+
+    // Método para actualizar la ubicación en el mapa.
+    private void actualizarUbicacionEnMapa(Location location) {
+        Log.d("vistaMapaFragment", "Actualizando ubicación en el mapa: " + location);
+        if (googleMap != null && location != null) {
+            LatLng ubicacionActual = new LatLng(location.getLatitude(), location.getLongitude());
+            googleMap.clear(); // Limpia marcadores anteriores.
+            googleMap.addMarker(new MarkerOptions().position(ubicacionActual).title("Estoy aquí"));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacionActual, 15)); // Ajusta el zoom según sea necesario.
+        }
+    }
+
+
+
 }

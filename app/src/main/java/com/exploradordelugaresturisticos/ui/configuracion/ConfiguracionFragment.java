@@ -1,4 +1,4 @@
-package com.example.exploradordelugaresturisticos.ui.configuracion;
+package com.exploradordelugaresturisticos.ui.configuracion;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.exploradordelugaresturisticos.databinding.FragmentConfiguracionBinding;
+import com.exploradordelugaresturisticos.databinding.FragmentConfiguracionBinding;
 
 public class ConfiguracionFragment extends Fragment {
 

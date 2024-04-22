@@ -1,4 +1,4 @@
-package com.example.exploradordelugaresturisticos.ui.mapa;
+package com.exploradordelugaresturisticos.ui.mapa;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
