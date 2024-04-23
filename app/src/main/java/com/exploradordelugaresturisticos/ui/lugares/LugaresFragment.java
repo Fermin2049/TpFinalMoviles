@@ -17,32 +17,42 @@ import com.exploradordelugaresturisticos.databinding.FragmentLugaresBinding;
 public class LugaresFragment extends Fragment {
 
     private FragmentLugaresBinding binding;
-    LugaresViewModel LugaresViewModel;
+    private LugaresViewModel LugaresViewModel;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-         LugaresViewModel =new ViewModelProvider(this).get(LugaresViewModel.class);
+        LugaresViewModel = new ViewModelProvider(this).get(LugaresViewModel.class);
 
         binding = FragmentLugaresBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textUbicacion;
 
+        // Observar el LiveData de ubicaciones
         LugaresViewModel.getMLocation().observe(getViewLifecycleOwner(), new Observer<Location>() {
             @Override
             public void onChanged(Location location) {
-                textView.setText("latitud "+ location.getLatitude() + " longitud"+location.getLongitude());
+                if (location != null) {
+                    textView.setText("Latitud: " + location.getLatitude() + ", Longitud: " + location.getLongitude());
+                }
             }
         });
 
-        LugaresViewModel.ObtenetUltimaUbicacion();
+        // Iniciar la observación de actualizaciones de ubicación
+        LugaresViewModel.lecturaPermanente();
+
+        // También puedes llamar a obtener la última ubicación conocida si lo consideras necesario
+        //LugaresViewModel.ObtenetUltimaUbicacion();
+
         return root;
     }
 
-    @Override
+   /*@Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        // Asegúrate de parar la lectura cuando la vista se destruye
         LugaresViewModel.pararLectura();
-    }
+    }*/
 }

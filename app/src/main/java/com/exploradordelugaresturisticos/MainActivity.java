@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -16,12 +17,13 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.exploradordelugaresturisticos.databinding.ActivityMainBinding;
+import com.exploradordelugaresturisticos.ui.lugares.LugaresViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private ActionBarDrawerToggle toggle;
+    private LugaresViewModel lugaresViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +33,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         solicitarPermiso();
 
+        lugaresViewModel = new ViewModelProvider(this).get(LugaresViewModel.class);
+        lugaresViewModel.lecturaPermanente();  // Inicia las actualizaciones de ubicación aquí
+
         // Configura el NavigationController y AppBarConfiguration
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_LugaresTuristico, R.id.nav_mapa, R.id.nav_configuracion,R.id.nav_salir)
+                R.id.nav_LugaresTuristico, R.id.nav_mapa, R.id.nav_configuracion, R.id.nav_salir)
                 .setOpenableLayout(binding.drawerLayout)
                 .build();
 
         // Establece el NavigationView con el NavController
         NavigationUI.setupWithNavController(binding.navView, navController);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        lugaresViewModel.pararLectura();  // Detiene las actualizaciones de ubicación aquí
     }
 
     @Override
@@ -57,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void solicitarPermiso(){
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M
-                &&((checkSelfPermission(ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED)||
-                (checkSelfPermission(ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED))){
-            requestPermissions(new String[]{ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION},1000);
+    public void solicitarPermiso() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                (checkSelfPermission(ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                        checkSelfPermission(ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            requestPermissions(new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, 1000);
         }
     }
 }
