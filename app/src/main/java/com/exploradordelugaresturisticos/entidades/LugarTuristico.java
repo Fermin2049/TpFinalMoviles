@@ -2,9 +2,10 @@ package com.exploradordelugaresturisticos.entidades;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class LugarTuristico {
+public class LugarTuristico implements Serializable {
     private LatLng coordenadas;
     private  String nombre;
     private  String descripcion;

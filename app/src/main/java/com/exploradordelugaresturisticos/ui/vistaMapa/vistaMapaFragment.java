@@ -41,6 +41,7 @@ public class vistaMapaFragment extends Fragment implements OnMapReadyCallback {
     private LocationCallback locationCallback;
     private Marker currentMarker;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +87,30 @@ public class vistaMapaFragment extends Fragment implements OnMapReadyCallback {
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+
+        // Define el click listener aquí, ya que en este punto estás seguro de que la vista ha sido creada
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                NavController navController = Navigation.findNavController(view);
+                new AlertDialog.Builder(getContext())
+                        .setTitle(marker.getTitle())
+                        .setMessage("¿Quieres ver más detalles del lugar?")
+                        .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Aquí usas la vista que pasamos al método onViewCreated
+                                NavController navController = Navigation.findNavController(view);
+                                navController.navigate(R.id.action_vistaMapaFragment_to_detalleLugarFragment);
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+                return true; // Indica que el evento de clic ha sido manejado
+            }
+        });
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -111,26 +135,27 @@ public class vistaMapaFragment extends Fragment implements OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(lugar1, 10));
 
         // Aquí también puedes iniciar las actualizaciones de ubicación si lo necesitas
+        final View rootView = getView();
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
-                // Crear un diálogo de alerta o algo similar para preguntar al usuario
                 new AlertDialog.Builder(getContext())
                         .setTitle(marker.getTitle())
                         .setMessage("¿Quieres ver más detalles del lugar?")
                         .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // Navega al otro fragmento que muestra el RecyclerView con todos los lugares
-                                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
-                                navController.navigate(R.id.nav_host_fragment_content_main); // Usa el ID correcto para la acción
+                                // Usa el ID de la acción para navegar
+                                NavController navController = Navigation.findNavController(rootView);
+                                navController.navigate(R.id.action_vistaMapaFragment_to_detalleLugarFragment);
                             }
                         })
                         .setNegativeButton("No", null)
                         .show();
-                return true; // Devuelve 'true' para indicar que hemos manejado este evento de clic
+                return true; // Indica que hemos manejado el evento de clic
             }
         });
+
         startLocationUpdates();
     }
 
