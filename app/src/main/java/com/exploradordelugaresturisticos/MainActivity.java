@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         solicitarPermiso();
 
-        lugaresViewModel = new ViewModelProvider(this).get(LugaresViewModel.class);
-        lugaresViewModel.lecturaPermanente();  // Inicia las actualizaciones de ubicación aquí
 
         // Configura el NavigationController y AppBarConfiguration
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -47,11 +45,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        lugaresViewModel.pararLectura();  // Detiene las actualizaciones de ubicación aquí
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

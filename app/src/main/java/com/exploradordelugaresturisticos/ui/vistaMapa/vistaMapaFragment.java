@@ -2,9 +2,14 @@ package com.exploradordelugaresturisticos.ui.vistaMapa;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -106,6 +111,26 @@ public class vistaMapaFragment extends Fragment implements OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(lugar1, 10));
 
         // Aquí también puedes iniciar las actualizaciones de ubicación si lo necesitas
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                // Crear un diálogo de alerta o algo similar para preguntar al usuario
+                new AlertDialog.Builder(getContext())
+                        .setTitle(marker.getTitle())
+                        .setMessage("¿Quieres ver más detalles del lugar?")
+                        .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Navega al otro fragmento que muestra el RecyclerView con todos los lugares
+                                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
+                                navController.navigate(R.id.nav_host_fragment_content_main); // Usa el ID correcto para la acción
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+                return true; // Devuelve 'true' para indicar que hemos manejado este evento de clic
+            }
+        });
         startLocationUpdates();
     }
 
