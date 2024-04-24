@@ -60,7 +60,6 @@ public class ConfiguracionFragment extends Fragment {
         });
 
 
-        idiomasSpinner = view.findViewById(R.id.idiomas_spinner);
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, idiomas);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         idiomasSpinner.setAdapter(adapter1);
