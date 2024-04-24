@@ -34,12 +34,9 @@ public class LugaresFragment extends Fragment {
 
         RecyclerView recyclerView = binding.listaLugares;
 
-        Context context = getContext();
-        if (context != null) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        } else {
-            Log.d("salida","no llega el context");
-        }
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         adapter = new LugaresAdapter(new ArrayList<>(), getContext(), getLayoutInflater());
         recyclerView.setAdapter(adapter);

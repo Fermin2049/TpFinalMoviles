@@ -17,6 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExploradorDeLugaresTuristicos"
         tools:targetApi="31" >
+        <activity
+            android:name=".ui.lugares.LugarElegido"
+            android:exported="true">
+        </activity>
 
         <!--
              TODO: Before you run your application, you need a Google Maps API key.

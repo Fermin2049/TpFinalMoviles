@@ -30,7 +30,7 @@ public class ConfiguracionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_configuracion, container, false);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ConfiguracionViewModel.class);
-
+        viewModel.setResources(getResources());
         tipoMapaSpinner = view.findViewById(R.id.map_type_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 requireContext(),
@@ -55,4 +55,6 @@ public class ConfiguracionFragment extends Fragment {
 
         return view;
     }
+
+
 }

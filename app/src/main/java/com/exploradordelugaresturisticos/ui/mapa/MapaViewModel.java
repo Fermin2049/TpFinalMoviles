@@ -52,12 +52,14 @@ public class MapaViewModel extends AndroidViewModel {
     }
 
     public void obtenerUltimaUbicacion() {
-        if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.d("salida", "Sin permisos");
+        if (ActivityCompat.checkSelfPermission(getApplication(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplication(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
         Task<Location> task = fused.getLastLocation();
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             task.addOnSuccessListener(getApplication().getMainExecutor(), new OnSuccessListener<Location>() {
@@ -69,31 +71,9 @@ public class MapaViewModel extends AndroidViewModel {
                 }
             });
         }
+
     }
 
-    public void lecturaPermanente() {
-        LocationRequest request = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 5000).build();
-        callback = new LocationCallback() {
-            @Override
-            public void onLocationResult(@NonNull LocationResult locationResult) {
-                // super.onLocationResult(locationResult);
-                if (locationResult == null) {
-                    return;
-                }
-                Location location = locationResult.getLastLocation();
-                mLocation.postValue(location);
-            }
-        };
-
-        if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        fused.requestLocationUpdates(request, callback, null);
-    }
-
-    public void paraLecturaPermanente(){
-        fused.removeLocationUpdates(callback);
-    }
 
     public LiveData<List<LugarTuristico>> getListaLugares() {
         return lugaresViewModel.getListaLugares();

@@ -65,7 +65,7 @@ public class LugaresViewModel extends AndroidViewModel {
                 "Centro comercial",
                 "06:00 a 21:00",
                 "25 de Mayo",
-                R.drawable.villa_deportiva3));
+                R.drawable.san_luis_shopping1));
 
         lugares.add(new LugarTuristico("Monumento al Pueblo Puntano",
                 -33.291958448935176,

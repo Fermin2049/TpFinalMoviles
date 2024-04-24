@@ -50,7 +50,15 @@ public class LugaresAdapter extends RecyclerView.Adapter<LugaresAdapter.ViewHold
         holder.foto.setImageResource(lugar.getFoto());
 
 
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, LugarElegido.class);
+                intent.putExtra("lugar", lugar);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -61,13 +69,11 @@ public class LugaresAdapter extends RecyclerView.Adapter<LugaresAdapter.ViewHold
     public class ViewHolderPepe extends RecyclerView.ViewHolder {
         TextView nombre, descripcion;
         ImageView foto;
-        Button boton;
 
         public ViewHolderPepe(@NonNull View itemView) {
             super(itemView);
             nombre = itemView.findViewById(R.id.tvTitulo);
             descripcion = itemView.findViewById(R.id.tvDescripcion);
-            boton = itemView.findViewById(R.id.btVerMas);
             foto = itemView.findViewById(R.id.ivFoto);
         }
     }
