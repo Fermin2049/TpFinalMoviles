@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/nav_mapa"
-        android:name="com.exploradordelugaresturisticos.ui.vistaMapa.vistaMapaFragment"
+        android:name="com.exploradordelugaresturisticos.ui.mapa.MapaFragment"
         android:label="@string/menu_mapas"
-        tools:layout="@layout/fragment_vista_mapa" />
+        tools:layout="@layout/fragment_mapa" />
 
     <fragment
         android:id="@+id/nav_configuracion"
@@ -28,4 +28,6 @@
         android:name="com.exploradordelugaresturisticos.ui.salir.SalirFragment"
         android:label="@string/menu_Salir"
         tools:layout="@layout/fragment_salir" />
+
+
 </navigation>

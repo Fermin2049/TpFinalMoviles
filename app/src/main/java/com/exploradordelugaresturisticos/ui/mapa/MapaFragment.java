@@ -46,7 +46,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             public void onChanged(Location location) {
                 if (googleMap != null) {
                     LatLng miUbicacion = new LatLng(location.getLatitude(), location.getLongitude());
-                    googleMap.addMarker(new MarkerOptions().position(miUbicacion).title("Mi Ubicación"));
+                    googleMap.addMarker(new MarkerOptions().position(miUbicacion).title("Aca estoy yo"));
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(miUbicacion, 15));
                 }
             }
@@ -78,7 +78,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         configuracionViewModel.getTipoMapa().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String tipoMapa) {
-                Log.d("MapsFragment", "Tipo de mapa cambiado a: " + tipoMapa);
                 if (googleMap != null) {
                     googleMap.setMapType(configuracionViewModel.obtenerTipoMapa());
                 }

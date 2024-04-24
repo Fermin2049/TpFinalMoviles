@@ -22,10 +22,7 @@ import com.exploradordelugaresturisticos.databinding.FragmentConfiguracionBindin
 public class ConfiguracionFragment extends Fragment {
 
     private ConfiguracionViewModel viewModel;
-
-    Spinner tipoMapaSpinner;
-    Spinner idiomasSpinner;
-    public static final String[] idiomas = {"Seleccionar Idioma", "English", "Español"};
+    private Spinner tipoMapaSpinner;
 
     @Nullable
     @Override
@@ -33,8 +30,6 @@ public class ConfiguracionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_configuracion, container, false);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ConfiguracionViewModel.class);
-        viewModel.setResources(getResources());
-
 
         tipoMapaSpinner = view.findViewById(R.id.map_type_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -50,29 +45,6 @@ public class ConfiguracionFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String tipoMapaSeleccionado = parent.getItemAtPosition(position).toString();
                 viewModel.setTipoMapa(tipoMapaSeleccionado);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, idiomas);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        idiomasSpinner.setAdapter(adapter1);
-        idiomasSpinner.setSelection(0);
-        idiomasSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String idiomaElegido = parent.getItemAtPosition(position).toString();
-
-                if (!idiomaElegido.equals("Seleccionar Idioma")) {
-                    viewModel.cambiarIdioma(idiomaElegido);
-                    reiniciarActividad();
-                }
             }
 
             @Override
@@ -82,11 +54,5 @@ public class ConfiguracionFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void reiniciarActividad() {
-        Intent intent = requireActivity().getIntent();
-        requireActivity().finish();
-        startActivity(intent);
     }
 }
