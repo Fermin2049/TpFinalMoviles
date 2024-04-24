@@ -2,28 +2,26 @@ package com.exploradordelugaresturisticos.entidades;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class LugarTuristico implements Serializable {
-    private LatLng coordenadas;
-    private  String nombre;
-    private  String descripcion;
-    private List<Integer> fotos;
+public class LugarTuristico {
+    private String nombre;
 
-    public LugarTuristico(LatLng coordenadas, String nombre, String descripcion, List<Integer> fotos) {
-        this.coordenadas = coordenadas;
+    private String descripcion;
+    private String horarios;
+    private String direccion;
+    private int foto;
+    private Double latitud;
+    private Double longitud;
+
+    public LugarTuristico(String nombre, Double lat, Double lon, String descripcion, String horarios, String direccion, int foto) {
         this.nombre = nombre;
+        this.latitud = lat;
+        this.longitud = lon;
         this.descripcion = descripcion;
-        this.fotos = fotos;
-    }
-
-    public LatLng getCoordenadas() {
-        return coordenadas;
-    }
-
-    public void setCoordenadas(LatLng coordenadas) {
-        this.coordenadas = coordenadas;
+        this.horarios = horarios;
+        this.direccion = direccion;
+        this.foto = foto;
     }
 
     public String getNombre() {
@@ -34,6 +32,22 @@ public class LugarTuristico implements Serializable {
         this.nombre = nombre;
     }
 
+    public Double getLat() {
+        return latitud;
+    }
+
+    public void setLat(Double lat) {
+        this.latitud = lat;
+    }
+
+    public Double getLon() {
+        return longitud;
+    }
+
+    public void setLon(Double lon) {
+        this.longitud = lon;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -42,11 +56,27 @@ public class LugarTuristico implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<Integer> getFotos() {
-        return fotos;
+    public String getHorarios() {
+        return horarios;
     }
 
-    public void setFotos(List<Integer> fotos) {
-        this.fotos = fotos;
+    public void setHorarios(String horarios) {
+        this.horarios = horarios;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public int getFoto() {
+        return foto;
+    }
+
+    public void setFoto(int foto) {
+        this.foto = foto;
     }
 }

@@ -1,81 +1,76 @@
 package com.exploradordelugaresturisticos.ui.lugares;
-import android.os.Bundle;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.exploradordelugaresturisticos.R;
-import com.exploradordelugaresturisticos.databinding.ItemLugarBinding;
 import com.exploradordelugaresturisticos.entidades.LugarTuristico;
 
 import java.util.List;
 
-public class LugaresAdapter extends RecyclerView.Adapter<LugaresAdapter.LugarViewHolder> {
+public class LugaresAdapter extends RecyclerView.Adapter<LugaresAdapter.ViewHolderPepe> {
 
-    private List<LugarTuristico> lugares;
-    private OnItemClickListener listener;
-    private NavController navController;
+    private List<LugarTuristico> listaDeLugares;
+    private Context context;
+    private LayoutInflater li;
 
-    public interface OnItemClickListener {
-        void onItemClick(LugarTuristico lugar);
+    public LugaresAdapter(List<LugarTuristico> listaDeLugares, Context context, LayoutInflater li) {
+        this.listaDeLugares = listaDeLugares;
+        this.context = context;
+        this.li = li;
     }
 
-    // Pasar el listener al constructor
-    public LugaresAdapter(List<LugarTuristico> lugares, OnItemClickListener listener) {
-        this.lugares = lugares;
-        this.listener = listener;
-    }
-
-    // Método para actualizar la lista de lugares
-    public void setLugares(List<LugarTuristico> nuevosLugares) {
-        this.lugares = nuevosLugares;
-        notifyDataSetChanged();  // Notifica a RecyclerView que los datos han cambiado
+    public void setLugares(List<LugarTuristico> lugares) {
+        listaDeLugares.clear();
+        listaDeLugares.addAll(lugares);
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public LugarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemLugarBinding binding = ItemLugarBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new LugarViewHolder(binding);
+    public ViewHolderPepe onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = li.inflate(R.layout.item_lugar, parent, false);
+        return new ViewHolderPepe(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LugarViewHolder holder, int position) {
-        LugarTuristico lugar = lugares.get(position);
-        holder.bind(lugar, listener, navController);
+    public void onBindViewHolder(@NonNull ViewHolderPepe holder, int position) {
+        LugarTuristico lugar = listaDeLugares.get(position);
+
+        holder.nombre.setText(lugar.getNombre());
+        holder.descripcion.setText(lugar.getDescripcion());
+        holder.foto.setImageResource(lugar.getFoto());
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return lugares != null ? lugares.size() : 0;
+        return listaDeLugares.size();
     }
 
-    static class LugarViewHolder extends RecyclerView.ViewHolder {
-        ItemLugarBinding binding;
+    public class ViewHolderPepe extends RecyclerView.ViewHolder {
+        TextView nombre, descripcion;
+        ImageView foto;
+        Button boton;
 
-
-        LugarViewHolder(ItemLugarBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-        }
-        public void bind(final LugarTuristico lugar, final OnItemClickListener listener, NavController navController) {
-            // ... configurar las vistas ...
-            itemView.setOnClickListener(v -> {
-                // Usar el NavController que pasaste
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("lugar", lugar);
-                navController.navigate(R.id.action_lugaresFragment_to_detalleLugarFragment, bundle);
-            });
+        public ViewHolderPepe(@NonNull View itemView) {
+            super(itemView);
+            nombre = itemView.findViewById(R.id.tvTitulo);
+            descripcion = itemView.findViewById(R.id.tvDescripcion);
+            boton = itemView.findViewById(R.id.btVerMas);
+            foto = itemView.findViewById(R.id.ivFoto);
         }
     }
-
 
 }
 

@@ -3,39 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/lugaresFragment">
+    app:startDestination="@id/FirstFragment">
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.exploradordelugaresturisticos.ui.lugares.LugaresFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_lugares" >
+
+    </fragment>
 
     <fragment
         android:id="@+id/vistaMapaFragment"
         android:name="com.exploradordelugaresturisticos.ui.vistaMapa.vistaMapaFragment"
-        android:label="Mapa"
-        tools:layout="@layout/fragment_vista_mapa">
+        android:label="fragment_vista_mapa"
+        tools:layout="@layout/fragment_vista_mapa" >
         <action
-            android:id="@+id/action_vistaMapaFragment_to_detalleLugarFragment"
-            app:destination="@id/detalleLugarFragment" />
+            android:id="@+id/action_vistaMapaFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/lugaresFragment"
-        android:name="com.exploradordelugaresturisticos.ui.lugares.LugaresFragment"
-        android:label="Lugares Turísticos"
-        tools:layout="@layout/fragment_lugares">
-        <action
-            android:id="@+id/action_lugaresFragment_to_detalleLugarFragment"
-            app:destination="@id/detalleLugarFragment" />
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/detalleLugarFragment"
-        android:name="com.exploradordelugaresturisticos.ui.lugares.DetalleLugarFragment"
-        android:label="Detalle de Lugar Turístico"
-        tools:layout="@layout/fragment_detalle_lugar">
-        <argument
-            android:name="lugar"
-            app:argType="com.exploradordelugaresturisticos.entidades.LugarTuristico"
-            app:nullable="true" />
-    </fragment>
-
 
 </navigation>

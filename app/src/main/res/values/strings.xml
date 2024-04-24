@@ -57,4 +57,11 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="image_description" />
+    <string name="ir_a_menu" />
+    <string name="volver" />
+    <string name="app_lang" />
+    <string name="tipo_de_mapa" />
+    <string name="app_config_title" />
+    <string name="salir" />
+    <string name="ver_m_s" />
 </resources>

@@ -1,56 +1,62 @@
 package com.exploradordelugaresturisticos.ui.lugares;
 
+
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.exploradordelugaresturisticos.R;
+import androidx.recyclerview.widget.RecyclerView;
 import com.exploradordelugaresturisticos.databinding.FragmentLugaresBinding;
 import com.exploradordelugaresturisticos.entidades.LugarTuristico;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LugaresFragment extends Fragment {
 
     private FragmentLugaresBinding binding;
-    private LugaresViewModel lugaresViewModel;
+    private LugaresAdapter adapter;
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        lugaresViewModel = new ViewModelProvider(requireActivity()).get(LugaresViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        LugaresViewModel viewModel =
+                new ViewModelProvider(this).get(LugaresViewModel.class);
+
         binding = FragmentLugaresBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-        // Configurar RecyclerView
-        binding.recyclerViewLugares.setLayoutManager(new LinearLayoutManager(getContext()));
-        // Obtén el NavController
-        NavController navController = NavHostFragment.findNavController(this);
-        LugaresAdapter adapter = new LugaresAdapter(new ArrayList<>(), new LugaresAdapter.OnItemClickListener() {
+        RecyclerView recyclerView = binding.listaLugares;
+
+        Context context = getContext();
+        if (context != null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            Log.d("salida","no llega el context");
+        }
+
+        adapter = new LugaresAdapter(new ArrayList<>(), getContext(), getLayoutInflater());
+        recyclerView.setAdapter(adapter);
+
+        viewModel.getListaLugares().observe(getViewLifecycleOwner(), new Observer<List<LugarTuristico>>() {
             @Override
-            public void onItemClick(LugarTuristico lugar) {
-                // Manejo del clic en un elemento del RecyclerView
-                // Crea un Bundle y coloca el LugarTuristico serializable
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("lugar", lugar);
-                // Usa el ID de la acción para navegar
-                navController.navigate(R.id.action_lugaresFragment_to_detalleLugarFragment, bundle);
+            public void onChanged(List<LugarTuristico> lugares) {
+                adapter.setLugares(lugares);
             }
         });
-        binding.recyclerViewLugares.setAdapter(adapter);
 
-        // Observar cambios en los datos
-        lugaresViewModel.getLugares().observe(getViewLifecycleOwner(), lugares -> {
-            // Actualizar el adaptador con los datos más recientes
-            adapter.setLugares(lugares);
-        });
+        return root;
+    }
 
-        return binding.getRoot();
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
