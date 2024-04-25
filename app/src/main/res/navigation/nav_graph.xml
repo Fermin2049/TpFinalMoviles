@@ -9,13 +9,26 @@
         android:id="@+id/FirstFragment"
         android:name="com.exploradordelugaresturisticos.ui.lugares.LugaresFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_lugares" >
-
+        tools:layout="@layout/fragment_lugares">
+        <action
+            android:id="@+id/action_FirstFragment_to_LugarElegidoFragment"
+            app:destination="@id/LugarElegidoFragment" />
     </fragment>
 
     <fragment
+        android:id="@+id/LugarElegidoFragment"
+        android:name="com.exploradordelugaresturisticos.ui.lugares.LugarElegido"
+        android:label="fragment_lugar_elegido"
+        tools:layout="@layout/fragment_lugar_elegido">
+        <argument
+            android:name="lugarSeleccionado"
+            app:argType="com.exploradordelugaresturisticos.entidades.LugarTuristico" />
+    </fragment>
+
+
+    <fragment
         android:id="@+id/vistaMapaFragment"
-        android:name="com.exploradordelugaresturisticos.ui.vistaMapa.vistaMapaFragment"
+        android:name="com.exploradordelugaresturisticos.ui.mapa.MapaFragment"
         android:label="fragment_vista_mapa"
         tools:layout="@layout/fragment_vista_mapa" >
         <action

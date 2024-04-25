@@ -12,22 +12,19 @@ import com.exploradordelugaresturisticos.entidades.LugarTuristico;
 
 public class LugarElegidoViewModel extends AndroidViewModel {
 
-    private MutableLiveData<LugarTuristico> LugarTuristicoM;
+    private MutableLiveData<LugarTuristico> lugarTuristicoM;
+
     public LugarElegidoViewModel(@NonNull Application application) {
         super(application);
+        lugarTuristicoM = new MutableLiveData<>();
     }
+
     public LiveData<LugarTuristico> getLugarM() {
-        if (LugarTuristicoM == null){
-            LugarTuristicoM = new MutableLiveData<>();
-        }
-        return LugarTuristicoM;
+        return lugarTuristicoM;
     }
-    public void recuperarLugar(Intent intent){
 
-        LugarTuristico lugar = (LugarTuristico)intent.getSerializableExtra("lugar");
-
-        if (lugar != null){
-            LugarTuristicoM.setValue(lugar);
-        }
+    // Método para establecer el lugar turístico directamente
+    public void setLugarTuristico(LugarTuristico lugar) {
+        lugarTuristicoM.setValue(lugar);
     }
 }

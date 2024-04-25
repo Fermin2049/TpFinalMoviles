@@ -1,14 +1,13 @@
 package com.exploradordelugaresturisticos.ui.lugares;
-import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.exploradordelugaresturisticos.R;
@@ -19,13 +18,11 @@ import java.util.List;
 public class LugaresAdapter extends RecyclerView.Adapter<LugaresAdapter.ViewHolderPepe> {
 
     private List<LugarTuristico> listaDeLugares;
-    private Context context;
-    private LayoutInflater li;
+    private OnLugarClickListener clickListener;
 
-    public LugaresAdapter(List<LugarTuristico> listaDeLugares, Context context, LayoutInflater li) {
+    public LugaresAdapter(List<LugarTuristico> listaDeLugares, OnLugarClickListener clickListener) {
         this.listaDeLugares = listaDeLugares;
-        this.context = context;
-        this.li = li;
+        this.clickListener = clickListener;
     }
 
     public void setLugares(List<LugarTuristico> lugares) {
@@ -37,28 +34,28 @@ public class LugaresAdapter extends RecyclerView.Adapter<LugaresAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolderPepe onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater li = LayoutInflater.from(parent.getContext());
         View view = li.inflate(R.layout.item_lugar, parent, false);
         return new ViewHolderPepe(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderPepe holder, int position) {
-        LugarTuristico lugar = listaDeLugares.get(position);
+        final LugarTuristico lugar = listaDeLugares.get(position);
 
         holder.nombre.setText(lugar.getNombre());
         holder.descripcion.setText(lugar.getDescripcion());
         holder.foto.setImageResource(lugar.getFoto());
 
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, LugarElegido.class);
-                intent.putExtra("lugar", lugar);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("lugarSeleccionado", lugar);
+                Navigation.findNavController(view).navigate(R.id.action_FirstFragment_to_LugarElegidoFragment, bundle);
             }
         });
+
     }
 
     @Override
@@ -78,5 +75,9 @@ public class LugaresAdapter extends RecyclerView.Adapter<LugaresAdapter.ViewHold
         }
     }
 
-}
+    public interface OnLugarClickListener {
+        void onLugarClicked(LugarTuristico lugar);
+    }
 
+
+}
